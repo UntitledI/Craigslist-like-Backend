@@ -1,4 +1,17 @@
 package dao;
 
-public interface DataAccessObject {
+import dto.BaseDto;
+
+import java.util.List;
+
+public interface DataAccessObject<T extends BaseDto> {
+    static DataAccessObject getInstance(){
+        throw new RuntimeException("not implemented");
+    }
+
+    T put(T item);
+
+    List<T> getItems();
+
+    void delete(String id);
 }
