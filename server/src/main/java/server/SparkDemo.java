@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import dao.ListingDao;
 import dto.ListingDto;
 import dto.ResponseDto;
-import processor.AddListingProcessor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +25,8 @@ public class SparkDemo {
       ListingDto item = gson.fromJson(body,ListingDto.class);
       ListingDto hi = ListingDao.getInstance().put(item);
       addList.add(hi);
+      System.out.println("item added, list size: " + addList.size());
+
       ResponseDto addItem = new ResponseDto(new Date(),addList, true);
       return addItem;
     });
