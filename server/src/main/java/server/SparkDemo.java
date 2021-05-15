@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 
@@ -25,10 +26,8 @@ public class SparkDemo {
       ListingDto item = gson.fromJson(body,ListingDto.class);
       ListingDto hi = ListingDao.getInstance().put(item);
       addList.add(hi);
-      System.out.println("item added, list size: " + addList.size());
-
       ResponseDto addItem = new ResponseDto(new Date(),addList, true);
-      return addItem;
+      return addList.size();
     });
 
     delete("/api/deleteListing", (request, response) -> {
@@ -40,15 +39,19 @@ public class SparkDemo {
     });
 
     get("api/viewListings", (request, response) -> {
+      // call listing dao getitems, put the returned list into responsedto and return that
       ResponseDto viewItem = new ResponseDto(new Date(), ListingDao.getInstance().getItems(), true);
-      return viewItem;
+      return gson.toJson(viewItem);
     });
 
     get("/api/filterListings", (request, response) -> {
       String email = request.params("email");
       List<ListingDto> toFilter = ListingDao.getInstance().getItems();
-
-      return null;
+      Predicate<ListingDto> byType = itemDto -> itemDto.email.equals(email);
+      List<ListingDto> postFilter = toFilter.stream().filter(byType)
+              .collect(Collectors.toList());
+      ResponseDto filteredListings = new ResponseDto(new Date(),postFilter, true);
+      return filteredListings;
     });
 
 
