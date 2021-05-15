@@ -39,8 +39,11 @@ public class SparkDemo {
     });
 
     get("api/viewListings", (request, response) -> {
-
-      return null;
+      String id = request.params("id");
+      ListingDao.getInstance().viewListings(id);
+      List<ListingDto> viewing = new ArrayList<>();
+      ResponseDto viewItem = new ResponseDto(new Date(), viewing, true);
+      return viewItem;
     });
 
     get("/api/filterListings", (request, response) -> {
