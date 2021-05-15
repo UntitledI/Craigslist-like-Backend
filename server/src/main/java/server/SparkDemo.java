@@ -23,10 +23,9 @@ public class SparkDemo {
     post("/api/createListing", (request, response) -> {
       String body = request.body();
       List<ListingDto> addList= new ArrayList<>();
-      ListingDto item = gson.fromJson(body,ListingDto.class);
-      ListingDto hi = ListingDao.getInstance().put(item);
-      addList.add(hi);
-      ResponseDto addItem = new ResponseDto(new Date(),addList, true);
+      ListingDto listing = gson.fromJson(body,ListingDto.class);
+      ListingDto newListing = ListingDao.getInstance().put(listing);
+      addList.add(newListing);
       return addList.size();
     });
 
@@ -47,11 +46,11 @@ public class SparkDemo {
     get("/api/filterListings", (request, response) -> {
       String email = request.params("email");
       List<ListingDto> toFilter = ListingDao.getInstance().getItems();
-      Predicate<ListingDto> byType = itemDto -> itemDto.email.equals(email);
-      List<ListingDto> postFilter = toFilter.stream().filter(byType)
+      Predicate<ListingDto> byEmail = itemDto -> itemDto.email.equals(email);
+      List<ListingDto> postFilter = toFilter.stream().filter(byEmail)
               .collect(Collectors.toList());
       ResponseDto filteredListings = new ResponseDto(new Date(),postFilter, true);
-      return filteredListings;
+      return gson.toJson(postFilter);
     });
 
 
