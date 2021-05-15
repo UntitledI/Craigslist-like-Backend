@@ -9,6 +9,7 @@ import processor.AddListingProcessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static spark.Spark.*;
 
@@ -30,8 +31,11 @@ public class SparkDemo {
     });
 
     delete("/api/deleteListing", (request, response) -> {
-
-      return null;
+      String id = request.params("id");
+      ListingDao.getInstance().delete(id);
+      List<ListingDto> delete = new ArrayList<>();
+      ResponseDto deleteItem = new ResponseDto(new Date(), delete, true);
+      return deleteItem;
     });
 
     get("api/viewListings", (request, response) -> {
@@ -40,6 +44,8 @@ public class SparkDemo {
     });
 
     get("/api/filterListings", (request, response) -> {
+      String email = request.params("email");
+      List<ListingDto> toFilter = ListingDao.getInstance().getItems();
 
       return null;
     });
