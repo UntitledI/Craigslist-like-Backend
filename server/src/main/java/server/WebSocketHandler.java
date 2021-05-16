@@ -1,10 +1,8 @@
-package demo;
+package server;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 import java.io.*;
-import java.util.*;
-import java.util.concurrent.*;
 
 @WebSocket
 public class WebSocketHandler {
