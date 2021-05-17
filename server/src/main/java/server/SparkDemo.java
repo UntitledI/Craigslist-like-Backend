@@ -22,19 +22,15 @@ public class SparkDemo {
     webSocket("/ws", WebSocketHandler.class);
     post("/api/createListing", (request, response) -> {
       String body = request.body();
-      List<ListingDto> addList= new ArrayList<>();
       ListingDto listing = gson.fromJson(body,ListingDto.class);
-      ListingDto newListing = ListingDao.getInstance().put(listing);
-      addList.add(newListing);
-      return addList.size();
+      ListingDao.getInstance().put(listing);
+      return ListingDao.getInstance().getItems().size();
     });
 
     delete("/api/deleteListing", (request, response) -> {
-      String id = request.params("id");
+      String id = request.params("entryId");
       ListingDao.getInstance().delete(id);
-      List<ListingDto> delete = new ArrayList<>();
-      ResponseDto deleteItem = new ResponseDto(new Date(), delete, true);
-      return deleteItem;
+      return ListingDao.getInstance().getItems().size();
     });
 
     get("api/viewListings", (request, response) -> {
@@ -50,7 +46,7 @@ public class SparkDemo {
       List<ListingDto> postFilter = toFilter.stream().filter(byEmail)
               .collect(Collectors.toList());
       ResponseDto filteredListings = new ResponseDto(new Date(),postFilter, true);
-      return gson.toJson(postFilter);
+      return gson.toJson(filteredListings);
     });
 
 
