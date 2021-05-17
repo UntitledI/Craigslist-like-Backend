@@ -18,7 +18,7 @@ const listings = ({ ws }) => {
     
     //Command to delete listing from the list
         const handleRemove = (title) => {
-        axios.get('/api/deleteListing')
+        axios.delete('/api/deleteListing')
             .then((res) => {
                 console.log(res.data);
                 const newList = listing.filter((item) => item.title !== title);
