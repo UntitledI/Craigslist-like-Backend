@@ -43,6 +43,9 @@ const listings = () => {
 
         <h1>Current Listings</h1>
         <div>
+            <p><link to ={addListings}>Add Listing</link></p>
+        </div>
+        <div>
         {/* Display list here */
           listing.map((object, i) => <div key={i}>{object.list}
           <button onClick={() => handleRemove(item.title)}></button>
