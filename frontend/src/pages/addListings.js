@@ -44,6 +44,7 @@ const handleSubmit = () => {
     setEmail(e.target.value);
   };
 
+  return (
   //TODO: Link addListings to the main listings page
 
     //note: it would be more logical to view listings before adding one
@@ -85,7 +86,7 @@ const handleSubmit = () => {
           </form>
         }
         </div>
-    </div>
+    </div>);
 }
 
 export default addListings;
