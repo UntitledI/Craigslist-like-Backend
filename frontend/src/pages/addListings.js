@@ -45,13 +45,18 @@ const handleSubmit = () => {
 const addListings = () => {
     //note: it would be more logical to view listings before adding one
     <div>
-        <h1><link to="Home">Home</link></h1>
-        <h1><link to="Chat">Chat</link></h1>
-        <h1><link to="Listings">Site Listings</link></h1>
+        <table>
+            <tr>
+                <th><link to="Home">Home</link></th>
+                <th><link to="Chat">Chat</link></th>
+                <th><link to="Listings">Site Listings</link></th>
+            </tr>
+        </table>
+
         <h1>Create Listing</h1>
         <div className="Create Listing"> {
             //Redirect to view listings page once 
-            <form action=".../Listings">
+            <form action="Listings">
             <label>
                 Email:
                 <input onChange={handleEmail} id="input-email" value={email} />

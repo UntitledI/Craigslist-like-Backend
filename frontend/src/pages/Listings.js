@@ -3,6 +3,7 @@
 
 import react from 'react'
 import axios from 'axios'
+import addListings from './addListings';
 
     const [description, setDescription] = React.useState('');
     const [type, setType] = React.useState('');
@@ -26,15 +27,19 @@ import axios from 'axios'
             console.log(res.data);
             const newList = list.filter((item) => item.title !== title);
             setListingsList(newList);
-        });
+        }).then(fetchListings);
     };
 
 const listings = () => {
     return (
     <div>
-        <h1><link to="Home">Home</link></h1>
-        <h1><link to="Chat">Chat</link></h1>
-        <h1><link to="Listings">Site Listings</link></h1>
+        <table>
+            <tr>
+                <th><link to="Home">Home</link></th>
+                <th><link to="Chat">Chat</link></th>
+                <th><link to="Listings">Site Listings</link></th>
+            </tr>
+        </table>
 
         <h1>Current Listings</h1>
         <div>
