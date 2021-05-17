@@ -2,25 +2,29 @@
 import React from 'react';
 import axios from 'axios';
 
-//For input
+
+const addListings = () => {
+
+  //For input
 const [description, setDescription] = React.useState('');
 const [type, setType] = React.useState('');
 const [price, setPrice] = React.useState('');
 const [title, setTitle] = React.useState('');
 const [email, setEmail] = React.useState('');
 
+/*
 const listing = [
     description, type, price, title, email
 ];
+*/
 
 //Command to submit listing
 const handleSubmit = () => {
-    console.log(description, type, price, title);
+    console.log(email, description, type, price, title);
     const body = {
-      description, type, price, title
+      email, description, type, price, title
     };
-    axios.post('/api/createListing', body)
-      .then(fetchListings);
+    axios.post('/api/createListing', body);
   };
 
   //Commands to update listings
@@ -42,7 +46,6 @@ const handleSubmit = () => {
 
   //TODO: Link addListings to the main listings page
 
-const addListings = () => {
     //note: it would be more logical to view listings before adding one
     <div>
         <table>

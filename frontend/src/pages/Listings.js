@@ -1,36 +1,41 @@
 //View Listings
 //Must link addListings to this one
 
-import react from 'react'
 import axios from 'axios'
 import addListings from './addListings';
+import React from 'react';
 
-    const [description, setDescription] = React.useState('');
-    const [type, setType] = React.useState('');
-    const [price, setPrice] = React.useState('');
-    const [title, setTitle] = React.useState('');
-    const [email, setEmail] = React.useState('');
+const listings = ({ ws }) => {
+    const [listing, setListing] = React.useState([]);
 
-    const listing = [
-        description, type, price, title, email
-    ];
+    //Command to fetch list (IMPORTANT)
+        const fetchListings = () => {
+            axios.get('/api/viewListings');
+        };
+    
+    //Command to delete listing from the list
+        const handleRemove = (title) => {
+        axios.get('/api/deleteListing')
+            .then((res) => {
+                console.log(res.data);
+                const newList = list.filter((item) => item.title !== title);
+                setListingsList(newList);
+            }).then(fetchListings);
+        };
 
-//Command to fetch list (IMPORTANT)
-    const fetchListings = () => {
-        axios.get('/api/viewListings');
-    };
+    React.useEffect(() => {
 
-//Command to delete listing from the list
-    const handleRemove = (title) => {
-    axios.get('/api/deleteListing')
-        .then((res) => {
-            console.log(res.data);
-            const newList = list.filter((item) => item.title !== title);
-            setListingsList(newList);
-        }).then(fetchListings);
-    };
+        fetchListings();
 
-const listings = () => {
+        ws.addEventListener('listing', (listing) => {
+            console.log(listing);
+            const parsedData = JSON.parse(listing.data);
+            console.log(parsedData);
+            setListing(parsedData.listing);
+        });
+
+    }, []);
+
     return (
     <div>
         <table>
