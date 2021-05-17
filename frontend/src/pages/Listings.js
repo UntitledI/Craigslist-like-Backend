@@ -10,7 +10,10 @@ const listings = ({ ws }) => {
 
     //Command to fetch list (IMPORTANT)
         const fetchListings = () => {
-            axios.get('/api/viewListings');
+            axios.get('/api/viewListings').then((res) => {
+                console.log(res.data);
+                setListing(res.data);
+            });
         };
     
     //Command to delete listing from the list
@@ -18,7 +21,7 @@ const listings = ({ ws }) => {
         axios.get('/api/deleteListing')
             .then((res) => {
                 console.log(res.data);
-                const newList = list.filter((item) => item.title !== title);
+                const newList = listing.filter((item) => item.title !== title);
                 setListingsList(newList);
             }).then(fetchListings);
         };
