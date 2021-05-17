@@ -3,6 +3,8 @@ package dao;
 import dto.ListingDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import mongo.MongoConnection;
 import org.bson.Document;
 
@@ -23,9 +25,13 @@ public class ListingDao extends MongoDao<ListingDto>
         collection = mongoConnection.getCollection("MyCollection", ListingDto.class);
     }
 
+
     @Override
     public ListingDto put(ListingDto item) {
-        collection.insertOne(item);
+        Random rand = new Random();
+        int randID = rand.nextInt(1000)+1;
+        ListingDto newListing = new ListingDto(String.valueOf(randID), item.description, item.type, item.price, item.title, item.email);
+        collection.insertOne(newListing);
         return item;
     }
 

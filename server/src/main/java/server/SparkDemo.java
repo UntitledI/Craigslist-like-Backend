@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import dao.ListingDao;
 import dto.ListingDto;
 import dto.ResponseDto;
+import dto.BroadcastDto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -22,13 +22,20 @@ public class SparkDemo {
     webSocket("/ws", WebSocketHandler.class);
     post("/api/createListing", (request, response) -> {
       String body = request.body();
+      System.out.println(body);
       ListingDto listing = gson.fromJson(body,ListingDto.class);
       ListingDao.getInstance().put(listing);
+
+      BroadcastDto broadcastDto = new BroadcastDto(ListingDao.getInstance().getItems(),
+              WebSocketHandler.getClientCount());
+      WebSocketHandler.broadcast(gson.toJson(broadcastDto));
+
       return ListingDao.getInstance().getItems().size();
     });
 
     delete("/api/deleteListing", (request, response) -> {
-      String id = request.params("entryId");
+      String id = request.queryParams("entryId");
+      System.out.println(id);
       ListingDao.getInstance().delete(id);
       return ListingDao.getInstance().getItems().size();
     });
@@ -40,12 +47,16 @@ public class SparkDemo {
     });
 
     get("/api/filterListings", (request, response) -> {
-      String email = request.params("email");
+      String email = request.queryParams("email");
+      System.out.println(email);
       List<ListingDto> toFilter = ListingDao.getInstance().getItems();
-      Predicate<ListingDto> byEmail = itemDto -> itemDto.email.equals(email);
-      List<ListingDto> postFilter = toFilter.stream().filter(byEmail)
+      System.out.println(toFilter);
+      List<ListingDto> postFilter = toFilter.stream()
+              .filter(o -> o.email.equals(email))
               .collect(Collectors.toList());
+      System.out.println(postFilter);
       ResponseDto filteredListings = new ResponseDto(new Date(),postFilter, true);
+      System.out.println(gson.toJson(filteredListings));
       return gson.toJson(filteredListings);
     });
 
