@@ -1,5 +1,5 @@
 //View Listings
-//Must link addListings to this one
+//Must link addListings to this one page
 
 import axios from 'axios'
 import AddListings from './AddListings';
