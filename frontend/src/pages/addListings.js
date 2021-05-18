@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 
-const addListings = () => {
+const AddListings = () => {
 
   //For input
 const [description, setDescription] = React.useState('');
@@ -28,17 +28,21 @@ const handleSubmit = () => {
   };
 
   //Commands to update listings
-  const handleDescription= (e) => {
-    setDescription(e.target.value);
+  const handleDescription = (e) => {
+    const inputDescription = e.target.value;
+    setDescription(inputDescription);
   };
   const handleType = (e) => {
-    setType(e.target.value);
+    const inputType = e.target.value;
+    setType(inputType);
   };
   const handlePrice = (e) => {
-    setPrice(e.target.value);
+    const inputPrice = e.target.value;
+    setPrice(inputPrice);
   };
   const handleTitle = (e) => {
-    setTitle(e.target.value);
+    const inputTitle = e.target.value;
+    setTitle(inputTitle);
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -89,4 +93,4 @@ const handleSubmit = () => {
     </div>);
 }
 
-export default addListings;
+export default AddListings;

@@ -2,18 +2,17 @@
 //Must link addListings to this one
 
 import axios from 'axios'
-import addListings from './addListings';
+import AddListings from './AddListings';
 import React from 'react';
 
-const listings = ({ ws }) => {
-    const [listing, setListing] = React.useState([]);
+const Listings = ({ ws }) => {
     const [listings, setListingsList] = React.useState([]);
 
     //Command to fetch list (IMPORTANT)
         const fetchListings = () => {
             axios.get('/api/viewListings').then((res) => {
                 console.log(res.data);
-                setListing(res.data);
+                setListingsList(res.data);
             });
         };
     
@@ -37,24 +36,26 @@ const listings = ({ ws }) => {
             console.log(listing);
             const parsedData = JSON.parse(listing.data);
             console.log(parsedData);
-            setListing(parsedData.listing);
+            setListingsList(parsedData.listing);
         });
 
     }, []);
 
     return (
     <div>
+        <h1>view listings</h1>
         <table>
             <tr>
                 <th><link to="Home">Home</link></th>
                 <th><link to="Chat">Chat</link></th>
                 <th><link to="Listings">Site Listings</link></th>
+                <th><link to="AddListings">Site Listings</link></th>
             </tr>
         </table>
 
         <h1>Current Listings</h1>
         <div>
-            <p><link to ={addListings}>Add Listing</link></p>
+            <p><link to ={AddListings}>Add Listing</link></p>
         </div>
         <div>
         {/* Display list here */
@@ -66,4 +67,4 @@ const listings = ({ ws }) => {
     );
 }
 
-export default listings;
+export default Listings;
