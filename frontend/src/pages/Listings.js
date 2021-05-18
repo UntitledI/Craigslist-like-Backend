@@ -7,6 +7,7 @@ import React from 'react';
 
 const listings = ({ ws }) => {
     const [listing, setListing] = React.useState([]);
+    const [listings, setListingsList] = React.useState([]);
 
     //Command to fetch list (IMPORTANT)
         const fetchListings = () => {
@@ -17,11 +18,11 @@ const listings = ({ ws }) => {
         };
     
     //Command to delete listing from the list
-        const handleRemove = (title) => {
+        const handleRemove = (id) => {
         axios.delete('/api/deleteListing')
             .then((res) => {
                 console.log(res.data);
-                const newList = listing.filter((item) => item.title !== title);
+                const newList = listing.filter((item) => item.id !== id);
                 setListingsList(newList);
             }).then(fetchListings);
         };
@@ -55,8 +56,8 @@ const listings = ({ ws }) => {
         </div>
         <div>
         {/* Display list here */
-          listing.map((object, i) => <div key={i}>{object.list}
-          <button onClick={() => handleRemove(item.title)}></button>
+          listings.map((object, i) => <div key={i}>{object.listing}
+          
         </div>)}; 
         </div>
     </div>
