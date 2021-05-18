@@ -18,6 +18,7 @@ const listings = ({ ws }) => {
         };
     
     //Command to delete listing from the list
+    /*
         const handleRemove = (id) => {
         axios.delete('/api/deleteListing')
             .then((res) => {
@@ -26,6 +27,7 @@ const listings = ({ ws }) => {
                 setListingsList(newList);
             }).then(fetchListings);
         };
+        */
 
     React.useEffect(() => {
 
