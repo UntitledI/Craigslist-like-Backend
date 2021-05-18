@@ -6,14 +6,13 @@ import addListings from './addListings';
 import React from 'react';
 
 const listings = ({ ws }) => {
-    const [listing, setListing] = React.useState([]);
     const [listings, setListingsList] = React.useState([]);
 
     //Command to fetch list (IMPORTANT)
         const fetchListings = () => {
             axios.get('/api/viewListings').then((res) => {
                 console.log(res.data);
-                setListing(res.data);
+                setListingsList(res.data);
             });
         };
     
@@ -37,7 +36,7 @@ const listings = ({ ws }) => {
             console.log(listing);
             const parsedData = JSON.parse(listing.data);
             console.log(parsedData);
-            setListing(parsedData.listing);
+            setListingsList(parsedData.listing);
         });
 
     }, []);
